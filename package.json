@@ -12,6 +12,7 @@
     "electron:dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron .\""
   },
   "dependencies": {
+    "node-osc": "^11.2.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
