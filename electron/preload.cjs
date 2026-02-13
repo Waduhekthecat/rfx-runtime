@@ -1,10 +1,9 @@
-const { contextBridge, ipcRenderer } = require("electron");
+'use strict';
 
-contextBridge.exposeInMainWorld("rfx", {
-  oscSend: (address, args) => ipcRenderer.invoke("rfx:oscSend", { address, args }),
-  writeCmd: (line) => ipcRenderer.invoke("rfx:writeCmd", { line }),
-  pulseRunCommand: () => ipcRenderer.invoke("rfx:pulseRunCommand"),
-  readSnapshot: () => ipcRenderer.invoke("rfx:readSnapshot"),
-  getOscLog: () => ipcRenderer.invoke("rfx:getOscLog"),
-  getPaths: () => ipcRenderer.invoke("rfx:getPaths"),
+const { contextBridge, ipcRenderer } = require('electron');
+
+// Expose the electronAPI to the renderer
+contextBridge.exposeInMainWorld('electronAPI', {
+    invokeCommand: (command, ...args) => ipcRenderer.invoke(command, ...args),
+    onCmdAck: (callback) => ipcRenderer.on('command-ack', (event, ...args) => callback(...args)),
 });
